@@ -1,0 +1,5 @@
+{
+  "name": "AssignmentApp",
+  "title": "JS Assignment app",
+  "mountNode": "react-root"
+}
