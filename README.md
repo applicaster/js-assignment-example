@@ -17,7 +17,8 @@ There are no service workers, but would you have created one on this project if 
 1. clone this repo
 2. install dependencies by running `yarn`
 3. Define your `UNSPLASH_ACCESS_KEY` and `UNSPLASH_SECRET_KEY` as environment variables
-4. That's it :tada:
+4. install flow definitions by running `flow-typed install`
+5. That's it :tada: go to
 
 ## How to run it
 

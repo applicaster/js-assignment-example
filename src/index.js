@@ -14,9 +14,3 @@ function runApp() {
 }
 
 runApp();
-
-if (module.hot) {
-  module.hot.accept("./index.js", () => {
-    runApp();
-  });
-}

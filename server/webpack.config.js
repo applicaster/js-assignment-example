@@ -6,9 +6,15 @@ const { resolve } = require("path");
 const app = require("../app.json");
 
 module.exports = {
-  entry: [resolve(__dirname, "../src/index.js")],
+  entry: ["babel-polyfill", resolve(__dirname, "../src/index.js")],
   mode: process.env.NODE_ENV || "development",
   plugins: [
+    new webpack.DefinePlugin({
+      __DEV__: JSON.stringify(process.env.NODE_ENV === "development"),
+      "process.env.NODE_ENV": JSON.stringify(process.env.NODE_ENV),
+      UNSPLASH_ACCESS_KEY: JSON.stringify(process.env.UNSPLASH_ACCESS_KEY),
+      UNSPLASH_SECRET_KEY: JSON.stringify(process.env.UNSPLASH_SECRET_KEY),
+    }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
@@ -17,18 +23,18 @@ module.exports = {
     new HtmlWebpackPlugin({
       appMountId: app.mountNode,
       title: app.title,
-      template: resolve(__dirname, "../src/index.html")
-    })
+      template: resolve(__dirname, "../src/index.html"),
+    }),
   ],
   output: {
     path: resolve(__dirname, "../public"),
     publicPath: "/",
-    filename: "bundle.[hash].js"
+    filename: "bundle.[hash].js",
   },
   resolve: {
     alias: {
-      "react-native$": "react-native-web"
-    }
+      "react-native$": "react-native-web",
+    },
   },
   module: {
     rules: [
@@ -38,19 +44,19 @@ module.exports = {
         query: {
           env: {
             development: {
-              plugins: ["react-hot-loader/babel"]
-            }
-          }
-        }
+              plugins: ["react-hot-loader/babel"],
+            },
+          },
+        },
       },
       {
         test: /\.css$/,
-        use: ["style-loader", "css-loader"]
-      }
-    ]
+        use: ["style-loader", "css-loader"],
+      },
+    ],
   },
   devServer: {
     port: process.env.PORT || 3000,
-    hot: true
-  }
+    hot: true,
+  },
 };

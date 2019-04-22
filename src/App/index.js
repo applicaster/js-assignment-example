@@ -1,7 +1,13 @@
 import * as React from "react";
-import { View, Text } from "react-native";
-
+import * as R from "ramda";
+import { View, Image } from "react-native";
 import { hot } from "react-hot-loader";
+
+import { ImageContext } from "./Contexts/ImageContext";
+import { ImageSizeContext } from "./Contexts/ImageSizeContext";
+import { IntervalContext } from "./Contexts/IntervalContext";
+import { ErrorBoundary } from "./Components/ErrorBoundary";
+import { RandomImage } from "./Components/RandomImage";
 
 const styles = {
   flex: 1,
@@ -9,14 +15,29 @@ const styles = {
   justifyContent: "center",
 };
 
-class App extends React.Component {
-  render() {
-    return (
-      <View style={styles}>
-        <Text>I'm a react App ! with hot-reloading \o/</Text>
-      </View>
-    );
-  }
+const imageStyles = {
+  marginTop: 48,
+  width: 300,
+  height: 51,
+};
+
+function App() {
+  return (
+    <View style={styles}>
+      <Image
+        source={{ uri: "/assets/applicaster_logo.png" }}
+        style={imageStyles}
+      />
+      <ErrorBoundary>
+        <RandomImage />
+      </ErrorBoundary>
+    </View>
+  );
 }
 
-export default hot(module)(App);
+export default R.compose(
+  ImageContext.withProvider,
+  IntervalContext.withProvider,
+  ImageSizeContext.withProvider,
+  hot(module)
+)(App);
